@@ -1,0 +1,38 @@
+<RCC>
+  <qresource prefix="/">
+    <file>res/icon_24x24_br.png</file>
+    <file>res/icon_24x24_clear.png</file>
+    <file>res/icon_24x24_godown.png</file>
+    <file>res/icon_24x24_goup.png</file>
+    <file>res/icon_24x24_cite.png</file>
+    <file>res/icon_24x24_code.png</file>
+    <file>res/icon_24x24_config.png</file>
+    <file>res/icon_24x24_copy.png</file>
+    <file>res/icon_24x24_cut.png</file>
+    <file>res/icon_24x24_delete.png</file>
+    <file>res/icon_24x24_em.png</file>
+    <file>res/icon_24x24_exit.png</file>
+    <file>res/icon_24x24_export.png</file>
+    <file>res/icon_24x24_fileopen.png</file>
+    <file>res/icon_24x24_h1.png</file>
+    <file>res/icon_24x24_h2.png</file>
+    <file>res/icon_24x24_h3.png</file>
+    <file>res/icon_24x24_h4.png</file>
+    <file>res/icon_24x24_h5.png</file>
+    <file>res/icon_24x24_h6.png</file>
+    <file>res/icon_24x24_help.png</file>
+    <file>res/icon_24x24_hr.png</file>
+    <file>res/icon_24x24_img.png</file>
+    <file>res/icon_24x24_link.png</file>
+    <file>res/icon_24x24_newline.png</file>
+    <file>res/icon_24x24_ol.png</file>
+    <file>res/icon_24x24_paste.png</file>
+    <file>res/icon_24x24_pre.png</file>
+    <file>res/icon_24x24_preview.png</file>
+    <file>res/icon_24x24_reload.png</file>
+    <file>res/icon_24x24_save.png</file>
+    <file>res/icon_24x24_saveas.png</file>
+    <file>res/icon_24x24_strong.png</file>
+    <file>res/icon_24x24_ul.png</file>
+  </qresource>
+</RCC>
