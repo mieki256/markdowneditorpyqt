@@ -386,35 +386,14 @@ class StartQT4(QtGui.QMainWindow):
             if self.auto_reload:
                 self.reload_html()
 
-    def chg_position(self):
-        """編集ウインドウ内でカーソル位置が変更された時に呼ばれる処理"""
-        if  self.load_success:
-            self.textEdit = self.ui.editor_window
-            c = self.textEdit.textCursor()
-
-            bcnt = self.textEdit.document().blockCount()    # 文書行数
-            ncnt = self.textEdit.textCursor().blockNumber() # 現在の行位置
-
-            # 編集ウインドウ内カーソル位置によってスクロールバーの値を変更
-            if c.atEnd():
-                # ページ文末までスクロール
-                self.scroll_page_end()
-                self.scrl_per = 100
-            elif c.atStart():
-                # ページ文頭までスクロール
-                self.scroll_page_start()
-                self.scrl_per = 0
-            else:
-                # 大味の割合でスクロール
-                self.scrl_per = int(ncnt * 100 / (bcnt -1))
-                self.scroll_page_per(self.scrl_per)
-
-            ## print "block %d , number %d , %d %%" % (bcnt, ncnt,self.scrl_per)
-
     def set_saved(self):
         """編集ウインドウが変更されてないことを記録"""
         self.saved = True
         self.store_wdw_title()
+
+    def chg_position(self):
+        """編集ウインドウ内でカーソル位置が変更された時に呼ばれる処理"""
+        self.scroll_webview()
 
     def store_wdw_title(self):
         """ウインドウタイトル文字列を設定"""
@@ -521,27 +500,19 @@ class StartQT4(QtGui.QMainWindow):
 
         # 編集ウインドウ内カーソル位置によって、
         # スクロールバーの値を変更する
-        c = self.ui.editor_window.textCursor()
-        if c.atEnd():
-            # ページ文末までスクロール
-            self.scroll_page_end()
-        elif c.atStart():
-            # ページ文頭までスクロール
-            self.scroll_page_start()
+        self.scroll_webview()
 
     def scroll_page_start(self):
         """QWebViewに対してページ文頭までスクロール"""
         self.mainframe = self.ui.my_webview.page().mainFrame()
         orient = QtCore.Qt.Vertical
         svmin = self.mainframe.scrollBarMinimum(orient)
-        svmax = self.mainframe.scrollBarMaximum(orient)
         self.mainframe.setScrollBarValue(orient, svmin)
 
     def scroll_page_end(self):
         """QWebViewに対してページ文末までスクロール"""
         self.mainframe = self.ui.my_webview.page().mainFrame()
         orient = QtCore.Qt.Vertical
-        svmin = self.mainframe.scrollBarMinimum(orient)
         svmax = self.mainframe.scrollBarMaximum(orient)
         self.mainframe.setScrollBarValue(orient, svmax)
 
@@ -554,6 +525,26 @@ class StartQT4(QtGui.QMainWindow):
         svmax = self.mainframe.scrollBarMaximum(orient)
         v = int(((svmax - svmin) * per / 100) + svmin)
         self.mainframe.setScrollBarValue(orient, v)
+
+    def scroll_webview(self):
+        """カーソル位置に合わせてWebViewのスクロール位置を調整"""
+        if self.load_success and self.auto_reload:
+            self.textEdit = self.ui.editor_window
+            c = self.textEdit.textCursor()
+            bcnt = self.textEdit.document().blockCount()        # 文書行数
+            ncnt = self.textEdit.textCursor().blockNumber()     # 現在の行位置
+            if c.atEnd():
+                # ページ文末までスクロール
+                self.scroll_page_end()
+                self.scrl_per = 100
+            elif c.atStart():
+                # ページ文頭までスクロール
+                self.scroll_page_start()
+                self.scrl_per = 0
+            else:
+                # 大味の割合でスクロール
+                self.scrl_per = int(ncnt * 100 / (bcnt - 1))
+                self.scroll_page_per(self.scrl_per)
 
     def reload_webview(self):
         """html表示更新ボタンが押された時の処理"""
@@ -860,7 +851,7 @@ class StartQT4(QtGui.QMainWindow):
             # カーソル位置は以前のまま
 
     def action_test1(self):
-        """実験用処理1"""
+        """実験用処理1。自由に書き換えて実験してください。"""
         s = ("abcdefghijklmn\n"
              "opqrstuvwxyz\n"
              "0123456789\n"
@@ -870,12 +861,12 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.editor_window.insertPlainText(s)
 
     def action_test2(self):
-        """実験用処理2"""
+        """実験用処理2。自由に書き換えて実験してください。"""
         self.ins_link()
         pass
 
     def action_test3(self):
-        """実験用処理3"""
+        """実験用処理3。自由に書き換えて実験してください。"""
 
         # カーソル位置の情報をprint
         res = ""
