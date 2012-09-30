@@ -80,6 +80,7 @@
     <property name="title">
      <string>ファイル(&amp;F)</string>
     </property>
+    <addaction name="action_new"/>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_saveas"/>
@@ -93,6 +94,7 @@
      <string>ヘルプ(&amp;H)</string>
     </property>
     <addaction name="action_help"/>
+    <addaction name="action_open_sample"/>
     <addaction name="separator"/>
     <addaction name="action_about"/>
    </widget>
@@ -100,12 +102,17 @@
     <property name="title">
      <string>編集(&amp;E)</string>
     </property>
+    <addaction name="action_undo"/>
+    <addaction name="action_redo"/>
+    <addaction name="separator"/>
     <addaction name="action_copy"/>
     <addaction name="action_paste"/>
     <addaction name="action_cut"/>
-    <addaction name="action_delete"/>
+    <addaction name="action_select_all"/>
     <addaction name="separator"/>
     <addaction name="action_duplicate"/>
+    <addaction name="separator"/>
+    <addaction name="action_clear"/>
    </widget>
    <widget class="QMenu" name="ins_menu">
     <property name="title">
@@ -113,7 +120,7 @@
     </property>
     <widget class="QMenu" name="menu_ins_head">
      <property name="title">
-      <string>見出し (&amp;H)</string>
+      <string>見出し(&amp;H)</string>
      </property>
      <addaction name="action_ins_head1"/>
      <addaction name="action_ins_head2"/>
@@ -123,16 +130,17 @@
      <addaction name="action_ins_head6"/>
     </widget>
     <addaction name="menu_ins_head"/>
+    <addaction name="action_ins_hr"/>
+    <addaction name="action_ins_br"/>
     <addaction name="action_ins_ul"/>
     <addaction name="action_ins_ol"/>
-    <addaction name="action_ins_hr"/>
+    <addaction name="action_ins_image"/>
     <addaction name="action_ins_link"/>
     <addaction name="action_ins_idlink"/>
-    <addaction name="action_ins_image"/>
+    <addaction name="action_ins_idurl"/>
     <addaction name="action_ins_cite"/>
     <addaction name="action_ins_code_multi"/>
     <addaction name="action_ins_code_word"/>
-    <addaction name="action_ins_br"/>
     <addaction name="action_ins_strong"/>
     <addaction name="action_ins_em"/>
    </widget>
@@ -144,10 +152,19 @@
     <addaction name="action_preview_set"/>
     <addaction name="action_font"/>
    </widget>
+   <widget class="QMenu" name="dev_menu">
+    <property name="title">
+     <string>開発用(&amp;D)</string>
+    </property>
+    <addaction name="action_test1"/>
+    <addaction name="action_test2"/>
+    <addaction name="action_test3"/>
+   </widget>
    <addaction name="file_menu"/>
    <addaction name="edit_menu"/>
    <addaction name="ins_menu"/>
    <addaction name="view_menu"/>
+   <addaction name="dev_menu"/>
    <addaction name="help_menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -155,40 +172,51 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_new"/>
    <addaction name="action_open"/>
    <addaction name="action_save"/>
    <addaction name="action_saveas"/>
    <addaction name="action_export_html"/>
    <addaction name="separator"/>
+   <addaction name="action_undo"/>
+   <addaction name="action_redo"/>
+   <addaction name="separator"/>
    <addaction name="action_ins_head1"/>
    <addaction name="action_ins_head2"/>
    <addaction name="action_ins_head3"/>
-   <addaction name="action_ins_ul"/>
-   <addaction name="action_ins_ol"/>
-   <addaction name="action_ins_link"/>
-   <addaction name="action_ins_image"/>
-   <addaction name="action_ins_code_multi"/>
-   <addaction name="action_ins_cite"/>
    <addaction name="action_ins_hr"/>
    <addaction name="action_ins_br"/>
+   <addaction name="action_ins_ul"/>
+   <addaction name="action_ins_ol"/>
+   <addaction name="action_ins_image"/>
+   <addaction name="action_ins_link"/>
+   <addaction name="action_ins_cite"/>
+   <addaction name="action_ins_code_multi"/>
    <addaction name="action_ins_strong"/>
    <addaction name="action_ins_em"/>
    <addaction name="separator"/>
    <addaction name="action_html_reload"/>
    <addaction name="separator"/>
    <addaction name="action_help"/>
+   <addaction name="action_open_sample"/>
    <addaction name="action_exit"/>
   </widget>
   <action name="action_open">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_fileopen.png</normaloff>:/res/icon_24x24_fileopen.png</iconset>
+     <normaloff>:/res/icon_fileopen.png</normaloff>:/res/icon_fileopen.png</iconset>
    </property>
    <property name="text">
     <string>開く(&amp;O)</string>
@@ -203,7 +231,7 @@
   <action name="action_save">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_save.png</normaloff>:/res/icon_24x24_save.png</iconset>
+     <normaloff>:/res/icon_save.png</normaloff>:/res/icon_save.png</iconset>
    </property>
    <property name="text">
     <string>保存(&amp;S)</string>
@@ -218,7 +246,7 @@
   <action name="action_saveas">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_saveas.png</normaloff>:/res/icon_24x24_saveas.png</iconset>
+     <normaloff>:/res/icon_saveas.png</normaloff>:/res/icon_saveas.png</iconset>
    </property>
    <property name="text">
     <string>別名保存</string>
@@ -233,10 +261,13 @@
   <action name="action_exit">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_exit.png</normaloff>:/res/icon_24x24_exit.png</iconset>
+     <normaloff>:/res/icon_exit.png</normaloff>:/res/icon_exit.png</iconset>
    </property>
    <property name="text">
     <string>終了(&amp;X)</string>
+   </property>
+   <property name="toolTip">
+    <string>終了</string>
    </property>
    <property name="shortcut">
     <string>Alt+X</string>
@@ -245,29 +276,34 @@
   <action name="action_help">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_help.png</normaloff>:/res/icon_24x24_help.png</iconset>
+     <normaloff>:/res/icon_help.png</normaloff>:/res/icon_help.png</iconset>
    </property>
    <property name="text">
-    <string>ヘルプ</string>
+    <string>ヘルプ(&amp;H)</string>
    </property>
-  </action>
-  <action name="action_sampleload">
-   <property name="text">
-    <string>サンプル表示</string>
+   <property name="toolTip">
+    <string>ヘルプをブラウザで表示</string>
    </property>
   </action>
   <action name="action_about">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_info.png</normaloff>:/res/icon_info.png</iconset>
+   </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="action_copy">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_copy.png</normaloff>:/res/icon_24x24_copy.png</iconset>
+     <normaloff>:/res/icon_copy.png</normaloff>:/res/icon_copy.png</iconset>
    </property>
    <property name="text">
     <string>コピー(&amp;C)</string>
+   </property>
+   <property name="toolTip">
+    <string>コピー</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
@@ -276,10 +312,13 @@
   <action name="action_paste">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_paste.png</normaloff>:/res/icon_24x24_paste.png</iconset>
+     <normaloff>:/res/icon_paste.png</normaloff>:/res/icon_paste.png</iconset>
    </property>
    <property name="text">
     <string>貼り付け(&amp;V)</string>
+   </property>
+   <property name="toolTip">
+    <string>貼り付け</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
@@ -288,10 +327,13 @@
   <action name="action_cut">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_cut.png</normaloff>:/res/icon_24x24_cut.png</iconset>
+     <normaloff>:/res/icon_cut.png</normaloff>:/res/icon_cut.png</iconset>
    </property>
    <property name="text">
     <string>切り取り(&amp;X)</string>
+   </property>
+   <property name="toolTip">
+    <string>切り取り</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
@@ -300,7 +342,7 @@
   <action name="action_delete">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_delete.png</normaloff>:/res/icon_24x24_delete.png</iconset>
+     <normaloff>:/res/icon_delete.png</normaloff>:/res/icon_delete.png</iconset>
    </property>
    <property name="text">
     <string>削除</string>
@@ -311,7 +353,7 @@
   </action>
   <action name="action_duplicate">
    <property name="text">
-    <string>行を複製(&amp;D)</string>
+    <string>行を複製</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
@@ -320,93 +362,123 @@
   <action name="action_ins_head2">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h2.png</normaloff>:/res/icon_24x24_h2.png</iconset>
+     <normaloff>:/res/icon_h2.png</normaloff>:/res/icon_h2.png</iconset>
    </property>
    <property name="text">
-    <string>見出し2 (&amp;2)</string>
+    <string>見出し2(&amp;2)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し2</string>
    </property>
   </action>
   <action name="action_ins_head3">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h3.png</normaloff>:/res/icon_24x24_h3.png</iconset>
+     <normaloff>:/res/icon_h3.png</normaloff>:/res/icon_h3.png</iconset>
    </property>
    <property name="text">
-    <string>見出し3 (&amp;3)</string>
+    <string>見出し3(&amp;3)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し3</string>
    </property>
   </action>
   <action name="action_ins_head4">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h4.png</normaloff>:/res/icon_24x24_h4.png</iconset>
+     <normaloff>:/res/icon_h4.png</normaloff>:/res/icon_h4.png</iconset>
    </property>
    <property name="text">
-    <string>見出し4 (&amp;4)</string>
+    <string>見出し4(&amp;4)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し4</string>
    </property>
   </action>
   <action name="action_ins_ul">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_ul.png</normaloff>:/res/icon_24x24_ul.png</iconset>
+     <normaloff>:/res/icon_ul.png</normaloff>:/res/icon_ul.png</iconset>
    </property>
    <property name="text">
-    <string>番号無しリスト (&amp;U)</string>
+    <string>番号無しリスト(&amp;U)</string>
+   </property>
+   <property name="toolTip">
+    <string>番号無しリスト</string>
    </property>
   </action>
   <action name="action_ins_ol">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_ol.png</normaloff>:/res/icon_24x24_ol.png</iconset>
+     <normaloff>:/res/icon_ol.png</normaloff>:/res/icon_ol.png</iconset>
    </property>
    <property name="text">
-    <string>番号付きリスト (&amp;O)</string>
+    <string>番号付きリスト(&amp;O)</string>
+   </property>
+   <property name="toolTip">
+    <string>番号付きリスト</string>
    </property>
   </action>
   <action name="action_ins_hr">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_hr.png</normaloff>:/res/icon_24x24_hr.png</iconset>
+     <normaloff>:/res/icon_hr.png</normaloff>:/res/icon_hr.png</iconset>
    </property>
    <property name="text">
-    <string>水平線 (&amp;R)</string>
+    <string>水平線(&amp;R)</string>
+   </property>
+   <property name="toolTip">
+    <string>水平線</string>
    </property>
   </action>
   <action name="action_ins_link">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_link.png</normaloff>:/res/icon_24x24_link.png</iconset>
+     <normaloff>:/res/icon_link.png</normaloff>:/res/icon_link.png</iconset>
    </property>
    <property name="text">
-    <string>リンク (&amp;L)</string>
+    <string>リンク(&amp;L)</string>
+   </property>
+   <property name="toolTip">
+    <string>リンク</string>
    </property>
   </action>
   <action name="action_ins_image">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_img.png</normaloff>:/res/icon_24x24_img.png</iconset>
+     <normaloff>:/res/icon_img.png</normaloff>:/res/icon_img.png</iconset>
    </property>
    <property name="text">
-    <string>画像 (&amp;I)</string>
+    <string>画像(&amp;I)</string>
+   </property>
+   <property name="toolTip">
+    <string>画像</string>
    </property>
   </action>
   <action name="action_ins_cite">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_cite.png</normaloff>:/res/icon_24x24_cite.png</iconset>
+     <normaloff>:/res/icon_cite.png</normaloff>:/res/icon_cite.png</iconset>
    </property>
    <property name="text">
+    <string>引用(&amp;C)</string>
+   </property>
+   <property name="toolTip">
     <string>引用</string>
    </property>
   </action>
   <action name="action_ins_code_word">
    <property name="text">
+    <string>コード断片(&amp;W)</string>
+   </property>
+   <property name="toolTip">
     <string>コード断片</string>
    </property>
   </action>
   <action name="action_config">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_config.png</normaloff>:/res/icon_24x24_config.png</iconset>
+     <normaloff>:/res/icon_config.png</normaloff>:/res/icon_config.png</iconset>
    </property>
    <property name="text">
     <string>設定</string>
@@ -415,10 +487,13 @@
   <action name="action_html_reload">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_reload.png</normaloff>:/res/icon_24x24_reload.png</iconset>
+     <normaloff>:/res/icon_reload.png</normaloff>:/res/icon_reload.png</iconset>
    </property>
    <property name="text">
-    <string>html表示を更新</string>
+    <string>html表示更新(&amp;R)</string>
+   </property>
+   <property name="toolTip">
+    <string>html表示更新</string>
    </property>
    <property name="shortcut">
     <string>F5</string>
@@ -427,57 +502,78 @@
   <action name="action_ins_br">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_newline.png</normaloff>:/res/icon_24x24_newline.png</iconset>
+     <normaloff>:/res/icon_newline.png</normaloff>:/res/icon_newline.png</iconset>
    </property>
    <property name="text">
+    <string>改行(&amp;N)</string>
+   </property>
+   <property name="toolTip">
     <string>改行</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="action_ins_idlink">
    <property name="text">
+    <string>参照リンク(&amp;J)</string>
+   </property>
+   <property name="toolTip">
     <string>参照リンク</string>
    </property>
   </action>
   <action name="action_ins_em">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_em.png</normaloff>:/res/icon_24x24_em.png</iconset>
+     <normaloff>:/res/icon_em.png</normaloff>:/res/icon_em.png</iconset>
    </property>
    <property name="text">
+    <string>斜体(&amp;E)</string>
+   </property>
+   <property name="toolTip">
     <string>斜体</string>
    </property>
   </action>
   <action name="action_ins_strong">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_strong.png</normaloff>:/res/icon_24x24_strong.png</iconset>
+     <normaloff>:/res/icon_strong.png</normaloff>:/res/icon_strong.png</iconset>
    </property>
    <property name="text">
+    <string>太字(&amp;B)</string>
+   </property>
+   <property name="toolTip">
     <string>太字</string>
    </property>
   </action>
   <action name="action_ins_code_multi">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_pre.png</normaloff>:/res/icon_24x24_pre.png</iconset>
+     <normaloff>:/res/icon_code.png</normaloff>:/res/icon_code.png</iconset>
    </property>
    <property name="text">
+    <string>コード複数行(&amp;M)</string>
+   </property>
+   <property name="toolTip">
     <string>コード複数行</string>
    </property>
   </action>
   <action name="action_preview_set">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_preview.png</normaloff>:/res/icon_24x24_preview.png</iconset>
+     <normaloff>:/res/icon_preview.png</normaloff>:/res/icon_preview.png</iconset>
    </property>
    <property name="text">
+    <string>リアルタイムプレビュー切替(&amp;C)</string>
+   </property>
+   <property name="toolTip">
     <string>リアルタイムプレビュー切替</string>
    </property>
   </action>
   <action name="action_export_html">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_export.png</normaloff>:/res/icon_24x24_export.png</iconset>
+     <normaloff>:/res/icon_export.png</normaloff>:/res/icon_export.png</iconset>
    </property>
    <property name="text">
     <string>htmlエクスポート</string>
@@ -486,33 +582,151 @@
   <action name="action_ins_head6">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h6.png</normaloff>:/res/icon_24x24_h6.png</iconset>
+     <normaloff>:/res/icon_h6.png</normaloff>:/res/icon_h6.png</iconset>
    </property>
    <property name="text">
-    <string>見出し6 (&amp;6)</string>
+    <string>見出し6(&amp;6)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し6</string>
    </property>
   </action>
   <action name="action_ins_head1">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h1.png</normaloff>:/res/icon_24x24_h1.png</iconset>
+     <normaloff>:/res/icon_h1.png</normaloff>:/res/icon_h1.png</iconset>
    </property>
    <property name="text">
-    <string>見出し1 (&amp;1)</string>
+    <string>見出し1(&amp;1)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し1</string>
    </property>
   </action>
   <action name="action_ins_head5">
    <property name="icon">
     <iconset resource="resources.qrc">
-     <normaloff>:/res/icon_24x24_h5.png</normaloff>:/res/icon_24x24_h5.png</iconset>
+     <normaloff>:/res/icon_h5.png</normaloff>:/res/icon_h5.png</iconset>
    </property>
    <property name="text">
-    <string>見出し5 (&amp;5)</string>
+    <string>見出し5(&amp;5)</string>
+   </property>
+   <property name="toolTip">
+    <string>見出し5</string>
    </property>
   </action>
   <action name="action_font">
    <property name="text">
+    <string>フォント変更(&amp;F)</string>
+   </property>
+   <property name="toolTip">
     <string>フォント変更</string>
+   </property>
+  </action>
+  <action name="action_clear">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_clear.png</normaloff>:/res/icon_clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>全テキストを消去</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_undo.png</normaloff>:/res/icon_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>元に戻す</string>
+   </property>
+   <property name="toolTip">
+    <string>元に戻す</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_ins_idurl">
+   <property name="text">
+    <string>参照リンク元URL(&amp;T)</string>
+   </property>
+   <property name="iconText">
+    <string>参照リンク元URL</string>
+   </property>
+   <property name="toolTip">
+    <string>参照リンク元URL</string>
+   </property>
+  </action>
+  <action name="action_select_all">
+   <property name="text">
+    <string>すべてを選択(&amp;A)</string>
+   </property>
+   <property name="toolTip">
+    <string>すべてを選択</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="action_open_sample">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_sample.png</normaloff>:/res/icon_sample.png</iconset>
+   </property>
+   <property name="text">
+    <string>サンプルを開く(&amp;S)</string>
+   </property>
+   <property name="toolTip">
+    <string>サンプルを開く</string>
+   </property>
+  </action>
+  <action name="action_new">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_new.png</normaloff>:/res/icon_new.png</iconset>
+   </property>
+   <property name="text">
+    <string>新規作成(&amp;N)</string>
+   </property>
+   <property name="iconText">
+    <string>新規作成</string>
+   </property>
+   <property name="toolTip">
+    <string>新規作成</string>
+   </property>
+  </action>
+  <action name="action_test1">
+   <property name="text">
+    <string>実験用処理1</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="action_test2">
+   <property name="text">
+    <string>実験用処理2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+8</string>
+   </property>
+  </action>
+  <action name="action_test3">
+   <property name="text">
+    <string>実験用処理3</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+9</string>
+   </property>
+  </action>
+  <action name="action_redo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/res/icon_redo.png</normaloff>:/res/icon_redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>やり直す</string>
    </property>
   </action>
  </widget>

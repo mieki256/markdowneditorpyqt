@@ -1,41 +1,126 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8" />
-<title>Title</title>
-<link href="file:///C:/home/prg/python/markdownediorpyqt/css/default.css" rel="stylesheet"></link>
+<title>no title</title>
+<style>
+html {}
+body {}
+p {}
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+a {}
+img {}
+pre {}
+hr {}
+ul {}
+ol {}
+li {}
+dl {}
+dt {}
+dd {}
+table {}
+td {}
+blockquote {}
+
+</style>
 </head>
 <body>
-<h1>見出し1</h1>
+<h1>見出し1 - Markdownのサンプル</h1>
 
-<h2>見出し2</h2>
+<h2>見出しの書き方</h2>
 
 <h3>見出し3</h3>
 
-<p>本文テキスト。本文テキスト。本文テキスト。</p>
+<h6>見出し6</h6>
+
+<p>見出し行は、行頭に「#」を1～6個書く。</p>
+
+<p>見出し1、2に限り、見出し行の下に「=」「-」を並べて書くこともできる。</p>
+
+<h2>番号なしリスト</h2>
 
 <ul>
-<li>list</li>
-<li>list</li>
-<li>list</li>
+<li>番号無しリストの例</li>
+<li>行頭に「* 」「- 」「+ 」などを書けば、</li>
+<li>番号無しリストになる。
+<ul>
+<li>番号無しリストの行頭に、</li>
+<li>空白3文字以上(?)を入れれば、
+<ul>
+<li>リストを字下げ</li>
+<li>することができる。</li>
+</ul></li>
+</ul></li>
 </ul>
 
-<p>何かしら1行記述する。 </p>
+<p>リストの直後に、リスト以外の何かの行を書かないと、リストは終了しない(ことが多い)。</p>
 
-<pre><code>整形済みテキスト。
-整形済みテキスト。
-</code></pre>
+<h2>番号付きリスト</h2>
 
 <ol>
-<li>list</li>
-<li>list</li>
-<li>list</li>
+<li>番号付きリストの例</li>
+<li>行頭に、「1. 」「2. 」といった感じで、</li>
+<li>「数字.」を書けば、番号付きリストになる。</li>
 </ol>
+
+<h2>改行</h2>
+
+<p>改行は、 <br />
+行末に <br />
+空白文字を2文字入れる。</p>
+
+<h2>リンク、画像表示</h2>
+
+<p>リンクは、
+<a href="http://www.google.com/">Google</a>
+のように書く。</p>
+
+<p>画像表示は
+<img src="./sample.jpg" alt="画像の代替テキスト" title="オプションタイトル" />
+のように書く。</p>
+
+<h2>斜体や強調文字</h2>
+
+<p><em>斜体</em> <em>斜体</em> <strong>強調</strong> <strong>強調</strong></p>
+
+<p>斜体や強調の記号を表示したいなら、「\」をつけて「*」「_」と書く。</p>
+
+<h2>整形済みテキスト</h2>
+
+<pre><code>ソースコード等を記述する際には、整形済みテキストが使える。
+行頭に、空白4文字かタブ文字を入れれば、整形済みテキストになる。
+</code></pre>
+
+<p>ソースコードの断片を書く場合は、<code>「`」この文字</code> で囲む。
+Shiftキーを押しながら「@」を押せば入力できる。</p>
+
+<p>1文字ずつで挟んでもいいが、もし、その中に「`」が出てくるようなら、2文字ずつで挟めばいい。</p>
+
+<h2>引用</h2>
+
+<blockquote>
+  <p>引用は、行頭に「&gt; 」を入れる。</p>
+</blockquote>
+
+<h2>水平線</h2>
+
+<p>水平線は、「-」か「*」を、行頭からたくさん並べる。以下の例では、3本の水平線が表示されるはず。</p>
 
 <hr />
 
-<p><a href="http://www.google.com/">Google</a></p>
+<hr />
+
+<hr />
+
+<h2>参考ページ</h2>
+
+<p><a href="http://blog.2310.net/archives/6">blog::2310 » Markdown文法の全訳</a> <br />
+<a href="http://ja.wikipedia.org/wiki/Markdown">Markdown - Wikipedia</a></p>
 
 </body>
 </html>
