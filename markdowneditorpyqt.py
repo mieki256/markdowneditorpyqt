@@ -49,7 +49,7 @@ import csv
 import webbrowser
 
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 WDW_TITLE_DEF = "MarkdownEditorPyQt"
 
 DBG = False
@@ -65,6 +65,15 @@ TEMPLETE_HTML_FNAME = "templete.html"
 TEMPLETE_MD_FNAME = "templete_markdown.csv"
 HELP_FNAME = "help.html"
 SAMPLE_FNAME = "sample.md"
+
+MD_EXT = (".md",
+          ".markdown",
+          ".mkd",
+          ".mdown",
+          ".mdwn",
+          ".mkdn",
+          ".mark",
+          ".txt")
 
 # htmlの雛形。
 # %s には、css部分、html本文が入る。
@@ -182,6 +191,9 @@ class StartQT4(QtGui.QMainWindow):
         # 編集ウインドウにフォーカスを当てる
         self.ui.editor_window.setFocus()
 
+        # ドラッグアンドドロップを有効化
+        self.setAcceptDrops(True)
+
     def setup_file_actions(self):
         """ファイルメニューの設定"""
         self.ui.action_new.triggered.connect(self.make_new_file)
@@ -271,7 +283,7 @@ class StartQT4(QtGui.QMainWindow):
 
     def set_last_dir(self, filepath):
         """最後にアクセスしたフォルダ名を記憶"""
-        self.last_dir = os.path.dirname(str(self.filename))
+        self.last_dir = os.path.dirname(unicode(self.filename))
 
     def load_html_templete(self):
         """HTMLテンプレートファイルを開く"""
@@ -315,6 +327,7 @@ class StartQT4(QtGui.QMainWindow):
             # 開くファイル名を入力してもらう
             fn = QtGui.QFileDialog.getOpenFileName(self, u"ファイルを開く",
                                                    self.get_last_dir())
+            fn = unicode(fn)
             if fn == "":
                 # キャンセルされた
                 self.statusBar().showMessage("Cancel.")
@@ -354,6 +367,37 @@ class StartQT4(QtGui.QMainWindow):
                 self.statusBar().showMessage(msg)
 
         return False
+
+    def dragEnterEvent(self, event):
+        """ドラッグしたアイテムがウインドウ内に入った際の処理"""
+        mime = event.mimeData()
+        if mime.hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        """ドラッグしたアイテムがドロップされた時の処理"""
+        mime = event.mimeData()
+        if mime.hasUrls():
+            fn = ""
+            for uri in mime.urls():
+                path = unicode(uri.toLocalFile())
+                if path.lower().endswith(MD_EXT) and os.path.isfile(path):
+                    fn = path
+                    break
+            event.accept()
+            if fn != "":
+                if self.check_saved():
+                    self.open_file_exec(fn)         # ファイルを開く
+            else:
+                # 開けるファイルが無かった
+                QtGui.QMessageBox.information(self,
+                                              "Message",
+                                              "not Markdown file.",
+                                              QtGui.QMessageBox.Ok)
+        else:
+            mime.ignore()
 
     def save_file(self):
         """ファイルを保存。
@@ -407,6 +451,8 @@ class StartQT4(QtGui.QMainWindow):
     def chg_text(self):
         """編集ウインドウが変更された時に呼ばれる処理"""
         self.saved = False
+        self.ui.action_save.setEnabled(True)
+        self.ui.action_saveas.setEnabled(True)
         self.store_wdw_title()
         if ONENTER_JOB:
             self.conv_req = 1
@@ -418,6 +464,8 @@ class StartQT4(QtGui.QMainWindow):
         """編集ウインドウが変更されてないことを記録"""
         self.saved = True
         self.store_wdw_title()
+        self.ui.action_save.setEnabled(False)
+        self.ui.action_saveas.setEnabled(False)
 
     def chg_position(self):
         """編集ウインドウ内でカーソル位置が変更された時に呼ばれる処理"""
@@ -430,7 +478,7 @@ class StartQT4(QtGui.QMainWindow):
             self.wdw_title = u"untitled - %s" % WDW_TITLE_DEF
         else:
             # 既に何かファイルを開いている
-            self.basename = os.path.basename(str(self.filename))
+            self.basename = os.path.basename(unicode(self.filename))
             self.wdw_title = u"%s - %s" % (self.basename, WDW_TITLE_DEF)
 
         if self.saved:

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mywebview.ui'
 #
-# Created: Thu Sep 27 09:28:04 2012
+# Created: Mon Oct 01 20:47:13 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
