@@ -22,7 +22,7 @@ Python + PyQt4 で作った、markdown記述用の簡易エディタです。
 
 ## スクリーンショット
 
-![ScreenShot](screenshot_mep.png)
+![ScreenShot](https://dl.dropbox.com/u/84075965/screenshot/markdowneditorpyqt/screenshot_mep.png)
 
 ## 動作に必要なもの
 
