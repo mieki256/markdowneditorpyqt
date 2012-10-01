@@ -35,7 +35,7 @@ ONENTER_JOB = False
 # スクリプトから開く各ファイル名の定義
 TEMPLETE_HTML_FNAME = "templete.html"
 TEMPLETE_MD_FNAME = "templete_markdown.csv"
-HELP_FNAME = "readme.html"
+HELP_FNAME = "help.html"
 SAMPLE_FNAME = "sample.md"
 
 # htmlの雛形。
