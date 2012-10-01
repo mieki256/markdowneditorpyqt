@@ -36,10 +36,6 @@ Python +  PyQt4 + markdown2 がインストールされている環境で、以�
 
     markdowneditorpyqt.pyw
 
-markdownファイルを渡して開きたい場合は、以下を実行します。
-
-    markdowneditorpyqt.pyw markdownファイルのパス 
-
 ## ライセンス
 
 GPLです。
