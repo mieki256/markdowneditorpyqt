@@ -34,11 +34,11 @@ Python + PyQt4 で作った、markdown記述用の簡易エディタです。
 
 Python +  PyQt4 + markdown2 がインストールされている環境で、以下を実行します。
 
-    markdowneditorpyqt.py
+    markdowneditorpyqt.pyw
 
 markdownファイルを渡して開きたい場合は、以下を実行します。
 
-    markdowneditorpyqt.py markdownファイルのパス 
+    markdowneditorpyqt.pyw markdownファイルのパス 
 
 ## ライセンス
 
