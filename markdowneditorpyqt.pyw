@@ -49,7 +49,7 @@ import csv
 import webbrowser
 
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 WDW_TITLE_DEF = "MarkdownEditorPyQt"
 
 DBG = False
@@ -61,10 +61,10 @@ FIRST_DIR_IS_HOME = False
 ONENTER_JOB = False
 
 # スクリプトから開く各ファイル名の定義
-TEMPLETE_HTML_FNAME = "templete.html"
-TEMPLETE_MD_FNAME = "templete_markdown.csv"
-HELP_FNAME = "help.html"
-SAMPLE_FNAME = "sample.md"
+TEMPLETE_HTML_FNAME = "resource/templete.html"
+TEMPLETE_MD_FNAME = "resource/templete_markdown.csv"
+HELP_FNAME = "help/help.html"
+SAMPLE_FNAME = "help/sample.md"
 
 MD_EXT = (".md",
           ".markdown",
@@ -74,24 +74,6 @@ MD_EXT = (".md",
           ".mkdn",
           ".mark",
           ".txt")
-
-# htmlの雛形。
-# %s には、css部分、html本文が入る。
-# テンプレートファイルが見つからない場合に使う。
-HTML_DT_INIT = """<!DOCTYPE html>
-<html lang="ja"><head><meta charset="utf-8" /><title>Title</title>
-<style>%s</style></head><body>%s</body></html>
-"""
-
-# markdownで使う記号群。テンプレートファイルが見つからない場合に使う。
-MD_KEYWORD_LIST = {"h1": "# ", "h2": "## ", "h3": "### ", "h4": "#### ",
-                   "h5": "##### ", "h6": "###### ", "ul": "* ", "ol": "1. ",
-                   "cite": "> ", "pre": "    ", "hr": "----", "code": "`",
-                   "em": "*", "strong": "**", "br": "  ",
-                   "href": '[Text](URL "Title")',
-                   "img": '![Text](/path/to/img.jpg)',
-                   "idlink": '[Text] [ID]',
-                   "idurl": '[ID]: <URL> "Opt Title"'}
 
 # 「全て消去」を呼んだ時のダイアログメッセージ
 MSG_CLEAR = (u"全てのテキストを消去します。" "\n"
@@ -106,6 +88,8 @@ class StartQT4(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_MyWebView()
         self.ui.setupUi(self)
+
+        self.script_root_dir = os.getcwd()
 
         # css一覧を取得
         self.css_list = ["default.css"]
@@ -263,7 +247,8 @@ class StartQT4(QtGui.QMainWindow):
 
     def get_script_dirname(self):
         """スクリプトファイルのあるフォルダ名を取得"""
-        return os.path.dirname(__file__)
+        ## return os.path.dirname(__file__)
+        return self.script_root_dir
 
     def get_dirname(self, path):
         """与えれたパスからフォルダ名を取得して返す"""
@@ -293,7 +278,6 @@ class StartQT4(QtGui.QMainWindow):
                 self.html_template = f.read()
         except IOError, inst:
             sys.stderr.write(str(inst) + "\n")
-            self.html_template = HTML_DT_INIT
 
     def load_markdown_dic(self):
         """markdownテンプレートを開く"""
@@ -306,8 +290,6 @@ class StartQT4(QtGui.QMainWindow):
                     self.md_dic[row[0]] = row[1]
         except IOError, inst:
             sys.stderr.write(str(inst) + "\n")
-            for key, value in MD_KEYWORD_LIST.items():
-                self.md_dic[key] = value
 
     def load_css(self, basename):
         """CSSファイルを開く"""
@@ -451,8 +433,8 @@ class StartQT4(QtGui.QMainWindow):
     def chg_text(self):
         """編集ウインドウが変更された時に呼ばれる処理"""
         self.saved = False
-        self.ui.action_save.setEnabled(True)
-        self.ui.action_saveas.setEnabled(True)
+        ## self.ui.action_save.setEnabled(True)
+        ## self.ui.action_saveas.setEnabled(True)
         self.store_wdw_title()
         if ONENTER_JOB:
             self.conv_req = 1
@@ -464,8 +446,8 @@ class StartQT4(QtGui.QMainWindow):
         """編集ウインドウが変更されてないことを記録"""
         self.saved = True
         self.store_wdw_title()
-        self.ui.action_save.setEnabled(False)
-        self.ui.action_saveas.setEnabled(False)
+        ## self.ui.action_save.setEnabled(False)
+        ## self.ui.action_saveas.setEnabled(False)
 
     def chg_position(self):
         """編集ウインドウ内でカーソル位置が変更された時に呼ばれる処理"""

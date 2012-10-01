@@ -18,10 +18,11 @@ Python + PyQt4 で作った、markdown記述用の簡易エディタです。
 ### 短所
 
 * utf8n で書かれたファイルの読み書きにしか対応していません。
-* 動作には Python + PyQt4 + markdown2 が必要です。(誰か exe化してください…)
+* 動作には Python + PyQt4 + markdown2 が必要です。(環境によっては、.exe を実行できるかもしれません。)
 
 ## スクリーンショット
 
+<!-- ![ScreenShot](screenshot_mep.png) -->
 ![ScreenShot](https://dl.dropbox.com/u/84075965/screenshot/markdowneditorpyqt/screenshot_mep.png)
 
 ## 動作に必要なもの
@@ -36,13 +37,15 @@ Python +  PyQt4 + markdown2 がインストールされている環境で、以�
 
     markdowneditorpyqt.pyw
 
+(環境によっては、Python等がインストールされてなくても、dist\markdowneditorpyqt.exe を実行することができるかもしれません。)
+
 ## ライセンス
 
 GPLです。
 
-そもそもPyQtがGPLですので、PyQtを使ったプログラムは、GPLを継承するそうです。
+そもそもPyQtがGPLですので、PyQtを使ったプログラムは、GPLを継承しなければならないそうです。
 
-改変や、exe化をして配布・公開する場合は、そのスクリプトソースも一緒に同梱すれば問題無いと思います。(誰でもソースを見れて、誰でも改変OKにすることが、GPLの目的のはずなので、ソースも同梱しておけば文句はないはず…。)
+改変や、exe化をして配布・公開する場合は、そのスクリプトソースも一緒に同梱すれば問題無いのでは…と思います。(誰でもソースを見れて、誰でも改変OKにすることが、GPLの目的のはずなので、ソースも同梱しておけば文句ないはず…。)
 
 ## 挿入機能について
 
@@ -53,15 +56,15 @@ GPLです。
 
 ## cssについて
 
-スクリプト設置フォルダ\css\ 以下に、自分好みの .css ファイルを置けば、選べるようになります。
+css\ 以下に、自分好みの .css ファイルを置けば、選べるようになります。
 
 ## htmlエクスポートについて
 
-スクリプト設置フォルダ\templete.html を修正すれば、エクスポートするhtml内の記述を自分好みに変更できます。
+resource\templete.html を修正すれば、エクスポートするhtml内の記述を自分好みに変更できます。
 
 ## markdown用の記号について
 
-スクリプト設置フォルダ\templete_markdown.csv を修正すれば、自分好みの markdown用記号を使えます。
+resource\templete_markdown.csv を修正すれば、自分好みの markdown用記号を使えます。
 
 ## GUIレイアウトを変更したい場合
 
@@ -72,6 +75,23 @@ cv_webview.bat の内容は以下の通りです。
     pyrcc4 -o resources_rc.py resources.qrc
     pyuic4 -o mywebview.py mywebview.ui
 
+## exe化について
+
+py2exe、PythonWin(pywin32？)等がインストール済みの環境なら、py2exe を使ってexe化することができるかもしれません。
+
+その場合、setup.py の、
+
+        WIN32UI_DIR = r"C:\Python27\Lib\site-packages\pythonwin"
+        IMAGELIB_DIR = r"C:\Python27\Lib\site-packages\PyQt4\plugins\imageformats"
+
+の2行を自分の環境に合わせて修正した上で、make_exe.bat を実行してください。distフォルダ以下に markdowneditorpyqt.exe その他が生成されます。
+
+一応、生成した .exe は、以下の環境で動作することを確認しました。
+
+* Windows7 x64
+* Windows7 x64 上のXPモード
+
+
 ## 動作確認環境
 
 * Windows7 x64
@@ -80,6 +100,11 @@ cv_webview.bat の内容は以下の通りです。
 * markdown2 2.1.0
 
 ## 履歴
+
+2012/10/02 ver. 0.0.4
+
+* exe化できるように修正。
+* py2exe用のsetup.py等を追加。
 
 2012/10/01 ver. 0.0.3
 

@@ -1,0 +1,27 @@
+html {}
+body {}
+p {}
+h1 { background-color: LightBlue; }
+h2 { background-color: PaleTurquoise; }
+h3 { border-bottom: 2px solid DarkGreen; }
+h4 { border-bottom: 1px solid DarkSeaGreen; }
+h5 { }
+h6 { }
+a {}
+img {}
+pre {color: #333; background-color: #f8f8f8; padding: 0.5em; font-size:small; }
+hr {}
+ul {}
+ol {}
+li {}
+dl {}
+dt {}
+dd {}
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+blockquote {
+  padding-left: 3em;
+  margin: 0;
+  color: #666666;
+  border-left: 0.5em #EEE solid;
+}
