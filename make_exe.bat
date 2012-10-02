@@ -11,4 +11,3 @@ python setup.py py2exe
 xcopy css dist\css\ /Y
 xcopy help dist\help\ /Y
 xcopy resource dist\resource\ /Y
-

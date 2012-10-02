@@ -47,9 +47,10 @@ import markdown2
 import glob
 import csv
 import webbrowser
+import imp
 
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 WDW_TITLE_DEF = "MarkdownEditorPyQt"
 
 DBG = False
@@ -80,6 +81,23 @@ MSG_CLEAR = (u"全てのテキストを消去します。" "\n"
              u"「元に戻す」ことはできません。" "\n\n"
              u"実行しますか？")
 
+if hasattr(sys, "setdefaultencoding"):
+    sys.setdefaultencoding("utf-8")
+
+
+def main_is_frozen():
+    """スクリプトとして動作しているか、exeで動作しているのかの判別"""
+    return (hasattr(sys, "frozen") or           # new py2exe
+            hasattr(sys, "importers")           # old py2exe
+            or imp.is_frozen("__main__"))       # tools/freeze
+
+
+def get_main_dir():
+    """実行ファイルがあるフォルダのパスを取得"""
+    if main_is_frozen():
+        return os.path.abspath(os.path.dirname(sys.executable))
+    return os.path.abspath(os.path.dirname(sys.argv[0]))
+
 
 class StartQT4(QtGui.QMainWindow):
 
@@ -89,7 +107,12 @@ class StartQT4(QtGui.QMainWindow):
         self.ui = Ui_MyWebView()
         self.ui.setupUi(self)
 
-        self.script_root_dir = os.getcwd()
+        # アイコンの設定
+        self.setWindowIcon(QtGui.QIcon('resource/icon_small.png'))
+
+        # script or exeのフォルダパスを取得
+        self.script_root_dir = get_main_dir()
+        os.chdir(self.get_script_dirname())
 
         # css一覧を取得
         self.css_list = ["default.css"]
@@ -106,8 +129,6 @@ class StartQT4(QtGui.QMainWindow):
         self.load_css(self.css_list[0])   # CSSをロード
         self.load_html_templete()         # HTMLテンプレートをロード
         self.load_markdown_dic()          # markdownテンプレートをロード
-
-        os.chdir(self.get_script_dirname())
 
         self.filename = ""
         self.basename = ""

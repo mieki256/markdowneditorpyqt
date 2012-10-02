@@ -51,6 +51,6 @@ if sys.platform == 'win32':
     setup(
         data_files = data_files,
         options={"py2exe" : py2exe_options},
-        windows=[{"script" : "markdowneditorpyqt.pyw"}],
+        windows=[{"script" : "markdowneditorpyqt.pyw", "icon_resources": [(1,"resource/icon.ico")]}],
         zipfile="zipped.lib",
     )
