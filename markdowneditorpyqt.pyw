@@ -48,9 +48,10 @@ import glob
 import csv
 import webbrowser
 import imp
+import json
 
 
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 WDW_TITLE_DEF = "MarkdownEditorPyQt"
 
 DBG = False
@@ -66,6 +67,7 @@ TEMPLETE_HTML_FNAME = "resource/templete.html"
 TEMPLETE_MD_FNAME = "resource/templete_markdown.csv"
 HELP_FNAME = "help/help.html"
 SAMPLE_FNAME = "help/sample.md"
+JSON_FILE = "settings.json"
 
 MD_EXT = (".md",
           ".markdown",
@@ -80,6 +82,15 @@ MD_EXT = (".md",
 MSG_CLEAR = (u"全てのテキストを消去します。" "\n"
              u"「元に戻す」ことはできません。" "\n\n"
              u"実行しますか？")
+
+# 初期設定
+DEFAULT_CFG = {'configver': 1,
+               'window_x': 40,
+               'window_y': 40,
+               'window_width': 800,
+               'window_height': 600,
+               'font': ""}
+
 
 if hasattr(sys, "setdefaultencoding"):
     sys.setdefaultencoding("utf-8")
@@ -113,6 +124,10 @@ class StartQT4(QtGui.QMainWindow):
         # script or exeのフォルダパスを取得
         self.script_root_dir = get_main_dir()
         os.chdir(self.get_script_dirname())
+
+        # 設定ファイルを読み込み
+        self.json_path = os.path.join(self.get_script_dirname(), JSON_FILE)
+        self.json_dic = self.read_config_file(self.json_path)
 
         # css一覧を取得
         self.css_list = ["default.css"]
@@ -198,6 +213,10 @@ class StartQT4(QtGui.QMainWindow):
 
         # ドラッグアンドドロップを有効化
         self.setAcceptDrops(True)
+
+        # 表示位置とサイズを変更
+        self.load_window_geometry()
+
 
     def setup_file_actions(self):
         """ファイルメニューの設定"""
@@ -514,6 +533,7 @@ class StartQT4(QtGui.QMainWindow):
     def closeEvent(self, event):
         """アプリを閉じようとした際の処理"""
         if self.check_saved():
+            self.save_window_geometry()
             event.accept()
         else:
             event.ignore()
@@ -683,6 +703,61 @@ class StartQT4(QtGui.QMainWindow):
         """ヘルプをブラウザで表示"""
         uri = os.path.join(self.get_script_dirname(), HELP_FNAME)
         webbrowser.open(uri)    # ブラウザを起動して読み込ませる
+
+    def load_window_geometry(self):
+        """ウインドウの表示位置、サイズ、フォントを再現"""
+        cfg = self.json_dic
+        self.setGeometry(cfg['window_x'], cfg['window_y'],
+                         cfg['window_width'], cfg['window_height'])
+        if 'font' in cfg:
+            if cfg['font'] != "":
+                font = QtGui.QFont()
+                str = QtCore.QString(unicode(cfg['font']))
+                if font.fromString(str):
+                    self.ui.editor_window.setFont(font)
+
+    def save_window_geometry(self):
+        """ウインドウの表示位置、サイズ、フォントを設定ファイルに記録"""
+        geo = self.geometry()
+        self.json_dic['window_x'] = geo.x()
+        self.json_dic['window_y'] = geo.y()
+        self.json_dic['window_width'] = geo.width()
+        self.json_dic['window_height'] = geo.height()
+        font = self.ui.editor_window.font()
+        self.json_dic['font'] = unicode(font.toString())
+        self.write_config_file(self.json_path, self.json_dic)
+
+    def read_config_file(self, file_path):
+        """設定ファイルを読み込み"""
+        fg = False
+        if os.path.exists(file_path):
+            # 設定ファイルが存在するので読み込み
+            with codecs.open(file_path, 'r', 'utf8') as f:
+                try:
+                    cfg = json.load(f)
+                    f.close()
+                    return cfg
+                    fg = True
+                except IOError, inst:
+                    sys.stderr.write(str(inst) + "\n")
+
+        # 設定ファイルが存在しないか、もしくは、読み込みに失敗した。
+        # 設定ファイルを初期化する。
+        cfg = DEFAULT_CFG.copy()
+        self.write_config_file(file_path, cfg)
+        return cfg
+
+    def write_config_file(self, file_path, cfg):
+        """設定ファイルに書き込み"""
+        with codecs.open(file_path, 'w', 'utf-8') as f:
+            try:
+                json.dump(cfg, f, ensure_ascii=False,
+                          sort_keys=True, indent=4)
+                f.close()
+                return True
+            except IOError, inst:
+                sys.stderr.write(str(inst) + "\n")
+        return False
 
     def edit_clear(self):
         """編集ウインドウで全テキストを消去。
