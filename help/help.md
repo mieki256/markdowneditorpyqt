@@ -1,19 +1,21 @@
 # MarkdownEditorPyQt
 
-Python + PyQt4 + markdown2 で作った、markdown記述用の簡易エディタです。
+Python + PyQt4 + markdown2 で作った、Windows上で動作する、markdown記述用の簡易エディタです。
 
-* Windows7 x64、WindowsXP Home SP3で動作確認済み。
+* Windows 7 x64、Windows XP Home SP3で動作確認済み。
 * PyQtはクロスプラットフォームのはずですので、Mac や Linux で動作させることも、容易なのかもしれません。
 
 ## 特徴
 
 ### 長所
 
+* Windowsで使えます。
+* 日本語のインライン入力ができます。
 * markdownからHTMLへの変換結果を、リアルタイムにプレビューできます。
 * markdown用の記号がいくつか挿入できます。
 * cssを切替えて、プレビューの見た目を変えられます。
 * 変換結果をhtmlとしてエクスポートできます。
-* 只のスクリプトなので、動作を自分好みに修正することが容易です。
+* 元はPythonスクリプトなので、動作を自分好みに修正することが容易です。
 
 ### 短所
 
@@ -26,15 +28,25 @@ Python + PyQt4 + markdown2 で作った、markdown記述用の簡易エディタ
 
 ## 動作に必要なもの
 
+### exe版を利用する場合
+
+特に必要ありません。
+
+### pyw版を利用する場合
+
 * [Python](http://www.python.org/download/)
 * [PyQt4](http://www.riverbankcomputing.co.uk/software/pyqt/download)
 * [markdown2](https://github.com/trentm/python-markdown2)
 
 ## 実行
 
+### exe版を利用する場合
+
 distフォルダ内の markdowneditorpyqt.exe を実行してください。
 
-Python +  PyQt4 + markdown2 がインストールされている環境なら、markdowneditorpyqt.pyw を実行することでも起動します。
+### pyw版を利用する場合
+
+Python +  PyQt4 + markdown2 がインストールされている環境で、markdowneditorpyqt.pyw を実行します。
 
 ## ライセンス
 
