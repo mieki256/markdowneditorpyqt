@@ -37,10 +37,10 @@ blockquote {
 <body>
 <h1>MarkdownEditorPyQt</h1>
 
-<p>Python + PyQt4 で作った、markdown記述用の簡易エディタです。</p>
+<p>Python + PyQt4 + markdown2 で作った、markdown記述用の簡易エディタです。</p>
 
 <ul>
-<li>Windows7 x64上でのみ動作確認しています。</li>
+<li>Windows7 x64、WindowsXP Home SP3で動作確認済み。</li>
 <li>PyQtはクロスプラットフォームのはずですので、Mac や Linux で動作させることも、容易なのかもしれません。</li>
 </ul>
 
@@ -60,7 +60,6 @@ blockquote {
 
 <ul>
 <li>utf8n で書かれたファイルの読み書きにしか対応していません。</li>
-<li>動作には Python + PyQt4 + markdown2 が必要です。(環境によっては、.exe を実行できるかもしれません。)</li>
 </ul>
 
 <h2>スクリーンショット</h2>
@@ -78,12 +77,9 @@ blockquote {
 
 <h2>実行</h2>
 
-<p>Python +  PyQt4 + markdown2 がインストールされている環境で、以下を実行します。</p>
+<p>distフォルダ内の markdowneditorpyqt.exe を実行してください。</p>
 
-<pre><code>markdowneditorpyqt.pyw
-</code></pre>
-
-<p>(環境によっては、Python等がインストールされてなくても、dist\markdowneditorpyqt.exe を実行することができるかもしれません。)</p>
+<p>Python +  PyQt4 + markdown2 がインストールされている環境なら、markdowneditorpyqt.pyw を実行することでも起動します。</p>
 
 <h2>ライセンス</h2>
 
@@ -104,33 +100,23 @@ blockquote {
 </ul></li>
 </ul>
 
-<h2>cssについて</h2>
+<h2>カスタマイズについて</h2>
+
+<h3>css</h3>
 
 <p>css\ 以下に、自分好みの .css ファイルを置けば、選べるようになります。</p>
 
-<h2>htmlエクスポートについて</h2>
+<h3>htmlエクスポート</h3>
 
 <p>resource\templete.html を修正すれば、エクスポートするhtml内の記述を自分好みに変更できます。</p>
 
-<h2>markdown用の記号について</h2>
+<h3>markdown用の記号</h3>
 
 <p>resource\templete_markdown.csv を修正すれば、自分好みの markdown用記号を使えます。</p>
 
-<h2>GUIレイアウトを変更したい場合</h2>
+<h3>exe化について</h3>
 
-<p>Qt Designer で mywebview.ui を開いて変更・保存後、cv_webview.bat を実行して、.ui ファイルと、.qrcファイルをPythonスクリプトに変換すれば、変更内容が反映されます。</p>
-
-<p>cv_webview.bat の内容は以下の通りです。</p>
-
-<pre><code>pyrcc4 -o resources_rc.py resources.qrc
-pyuic4 -o mywebview.py mywebview.ui
-</code></pre>
-
-<h2>exe化について</h2>
-
-<p>py2exe、PythonWin(pywin32？)等がインストール済みの環境なら、py2exe を使ってexe化することができるかもしれません。</p>
-
-<p>その場合、setup.py の、</p>
+<p>py2exe、PythonWin(pywin32？)等がインストール済みの環境なら、py2exe を使ってexe化できます。その場合、setup.py の、</p>
 
 <pre><code>    WIN32UI_DIR = r"C:\Python27\Lib\site-packages\pythonwin"
     IMAGELIB_DIR = r"C:\Python27\Lib\site-packages\PyQt4\plugins\imageformats"
@@ -143,7 +129,23 @@ pyuic4 -o mywebview.py mywebview.ui
 <ul>
 <li>Windows7 x64</li>
 <li>Windows7 x64 上のXPモード</li>
+<li>Windows XP Home SP3</li>
 </ul>
+
+<h3>GUIレイアウトを変更したい場合</h3>
+
+<p>Qt Designer で mywebview.ui を開いて変更・保存後、cv_webview.bat を実行して、.ui ファイルと、.qrcファイルをPythonスクリプトに変換します。</p>
+
+<ul>
+<li>pyw版を利用している場合は、markdowneditorpyqt.pyw を実行すれば変更内容が反映されます。</li>
+<li>exe版を利用している場合は、py2exe を使って exeファイルを作り直す必要があります。</li>
+</ul>
+
+<p>cv_webview.bat の内容は以下の通りです。</p>
+
+<pre><code>pyrcc4 -o resources_rc.py resources.qrc
+pyuic4 -o mywebview.py mywebview.ui
+</code></pre>
 
 <h2>起動時のエラー等について</h2>
 
@@ -155,6 +157,7 @@ pyuic4 -o mywebview.py mywebview.ui
 
 <ul>
 <li>Windows7 x64</li>
+<li>Windows XP Home SP3</li>
 <li>Python 2.7.3 (python-2.7.3.msi)</li>
 <li>PyQt 4.9.4-1 (PyQt-Py2.7-x86-gpl-4.9.4-1.exe)</li>
 <li>markdown2 2.1.0</li>
