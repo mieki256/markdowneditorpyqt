@@ -51,7 +51,7 @@ import imp
 import json
 
 
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 WDW_TITLE_DEF = "MarkdownEditorPyQt"
 
 DBG = False
@@ -702,6 +702,8 @@ class StartQT4(QtGui.QMainWindow):
     def display_help(self):
         """ヘルプをブラウザで表示"""
         uri = os.path.join(self.get_script_dirname(), HELP_FNAME)
+        uri = "file:///" + uri
+        ## print uri
         webbrowser.open(uri)    # ブラウザを起動して読み込ませる
 
     def load_window_geometry(self):
