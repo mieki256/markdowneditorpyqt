@@ -24,7 +24,7 @@ Python + PyQt4 + markdown2 で作った、Windows上で動作する、markdown�
 ## スクリーンショット
 
 <!-- ![ScreenShot](screenshot_mep.png) -->
-![ScreenShot](https://dl.dropbox.com/u/84075965/screenshot/markdowneditorpyqt/screenshot_mep.png)
+![ScreenShot](./screenshot/screenshot_mep.png)
 
 ## 動作に必要なもの
 
